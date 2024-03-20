@@ -1111,6 +1111,9 @@ public void keyTyped(KeyEvent e) {
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
+	//dice el codigo de las teclas
+	System.out.println(e.getKeyCode());
+	System.out.println(e.getKeyChar());
 	//el 8 es el codigo de la tecla borrar
 	if(e.getKeyCode() == 8) {
 		btn_panel.removeAll();
@@ -1119,23 +1122,84 @@ public void keyPressed(KeyEvent e) {
 		System.out.println("Se pre");
 	}
 	
-	//el 87 es la tecla w
-		if(e.getKeyCode() == 87){
+	//el 87 es la tecla Q
+	//Aumenta el tamaño
+	if(e.getKeyCode() == 81){
+		Component[] elementos = btn_panel.getComponents();
+		for (int i = 0; i < elementos.length; i++){
+			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")){
+				JButton btn = ((JButton) elementos[i]);
+				btn.setSize(btn.getHeight()+10, btn.getWidth()+10);
+				getContentPane().repaint();
+				getContentPane().revalidate();
+			}
+		}
+	}
+	
+	//tecla W
+	//Se mueve para arriba
+	if(e.getKeyCode() == 87) {
+		Component[] elementos = btn_panel.getComponents();
+		for(int i = 0; i <elementos.length; i++) {
+			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
+				JButton btn = ((JButton) elementos[i]);
+				btn.setSize(btn.getWidth(), btn.getHeight());
+				btn.setLocation(btn.getX(), btn.getY() - 10);
+				getContentPane().repaint();
+				getContentPane().revalidate();
+			}
+		}
+	}
+
+	//tecla A
+	//se mueve hacia la izquierda
+		if(e.getKeyCode() == 65) {
 			Component[] elementos = btn_panel.getComponents();
-			
-			for (int i = 0; i < elementos.length; i++){
-				if(elementos[i].getClass().toString().equals("class javax.swing.JButton")){
+			for(int i = 0; i <elementos.length; i++) {
+				if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
 					JButton btn = ((JButton) elementos[i]);
-					btn.setSize(btn.getHeight()+10, btn.getWidth()+10);
-					
+					btn.setSize(btn.getWidth(), btn.getHeight());
+					btn.setLocation(btn.getX() - 10, btn.getY());
 					getContentPane().repaint();
 					getContentPane().revalidate();
 				}
 			}
 		}
-		System.out.println(e.getKeyCode());
 	
+	//tecla S
+	//se mueve hacia abajo
+	if(e.getKeyCode() == 83) {
+		Component[] elementos = btn_panel.getComponents();
+		for(int i = 0; i <elementos.length; i++) {
+			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
+				JButton btn = ((JButton) elementos[i]);
+				btn.setSize(btn.getWidth(), btn.getHeight());
+				btn.setLocation(btn.getX(), btn.getY() + 10);
+				getContentPane().repaint();
+				getContentPane().revalidate();
+			}
+		}
+	}
+
+	//tecla D
+	//se mueve hacia la derecha
+	if(e.getKeyCode() == 68) {
+		Component[] elementos = btn_panel.getComponents();
+		for(int i = 0; i <elementos.length; i++) {
+			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
+				JButton btn = ((JButton) elementos[i]);
+
+				btn.setSize(btn.getWidth(), btn.getHeight());
+				btn.setLocation(btn.getX() + 10, btn.getY());
+				getContentPane().repaint();
+				getContentPane().revalidate();
+			}
+		}
+	}
+
 }
+	
+
 
 
 @Override
