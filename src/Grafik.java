@@ -19,7 +19,12 @@ public class Grafik extends JFrame implements KeyListener{
 	private JPanel contentPane;
 
 	
-	public int x =270,y=170;
+	public int x,y,largo,alto;
+	public String color;
+	Player obstaculo = new Player(x=100,y=100,largo=50,alto=80,color="#495A63");
+
+	Player jugador = new Player(x=50,y=50,largo=20,alto=20,color="#0E90D3");
+	
 	
 	/**
 	 * Launch the application.
@@ -77,9 +82,17 @@ public class Grafik extends JFrame implements KeyListener{
 	{
 		super.paint(g);
     	Graphics g2d = (Graphics)g;
-    	g2d.setColor(Color.white);
-    	//g2d.drawLine(30, 0, 770, 450);//linea
-    	g2d.fillRect(x, y, 50, 50);//cuadraro
+    	
+
+    	//Jugador
+    	g2d.setColor(Color.decode(jugador.getColor()));
+    	g2d.fillRect(jugador.getX(), jugador.getY(), jugador.getLargo(), jugador.getAlto());
+    	
+    	//Obstucalo
+    	g2d.setColor(Color.decode(obstaculo.getColor()));
+    	g2d.fillRect(obstaculo.getX(), obstaculo.getY(), obstaculo.getLargo(), obstaculo.getAlto());
+    	
+    	
 	}
 
 	@Override
@@ -99,28 +112,35 @@ public class Grafik extends JFrame implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		switch(e.getKeyCode())
-		{
-			case 87://w arriba
-				y-=10;
-				break;
-				
-			case 65://a izquierda
-				x-=10;
-				break;
-				
-			case 83://s abajo
-				y+=10;
-				break;
-				
-			case 68://d derecha
-				x+=10;
-				break;
-				
-			default:
-				break;
-		}
-		this.update(getGraphics());
+		
+			
+			switch(e.getKeyCode())
+			{
+				case 87://w arriba
+					
+					jugador.setY(y-=10);
+					break;
+				case 65://a izquierda
+					jugador.setX(x-=10);
+					break;
+				case 83://s abajo
+					jugador.setY(y+=10);
+					break;
+				case 68://d derecha
+					jugador.setX(x+=10);
+					break;
+				default:
+					break;
+			}
+			
+			this.update(getGraphics());
+			if(jugador.getX()+jugador.getLargo() > obstaculo.getX() && jugador.getX() < obstaculo.getX()+obstaculo.getLargo()  &&
+					jugador.getY()+jugador.getAlto() > obstaculo.getY() && jugador.getY() < obstaculo.getY()+obstaculo.getAlto())
+			{
+				System.out.println("colision");
+			}
+			
+		
 		
 	}
 	
