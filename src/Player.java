@@ -1,3 +1,7 @@
+import java.io.File;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Player {
 
@@ -5,6 +9,8 @@ public class Player {
 	//atributos 
 	private int x,y,largo, alto;
 	private String color;
+	
+	
 	
 	public Player(int x, int y, int largo,int alto, String color){
 		this.x=x;
@@ -54,10 +60,7 @@ public class Player {
 		this.color = color;
 	}
 	
-	public boolean colision(int x)
-	{
-		return false;
-	}
+	
 	
 	
 	
