@@ -16,6 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
@@ -40,6 +42,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Ventana extends JFrame implements KeyListener,MouseListener{
     
@@ -381,9 +390,9 @@ public class Ventana extends JFrame implements KeyListener,MouseListener{
     
     public void iniciarComponentes()
     {
-    	//this.login();
+    	this.login();
     	
-    	//this.registro();
+    	this.registro();
     
     	//this.admin();
     	
@@ -391,7 +400,7 @@ public class Ventana extends JFrame implements KeyListener,MouseListener{
     	
     	//this.calcuInteres();
     	
-    	this.botones();
+    	//this.botones();
 
     	this.repaint();
     	this.validate();
@@ -878,8 +887,36 @@ public class Ventana extends JFrame implements KeyListener,MouseListener{
 				
 				String usr = usr_field.getText();
 				String bio = bio_area.getText();
+				//ObjectMapper objectMapper = new ObjectMapper();
+				JSONParser parser = new JSONParser();
 				
+				try {
+					
+					Object obj = parser.parse(new FileReader("dato.json"));
+					JSONObject jsonObject =  (JSONObject) obj;
+					System.out.println("Json leido"+jsonObject);
+					
+					JSONArray array = (JSONArray) jsonObject.get("users");
+					System.out.println("");
+					
+					for (int i = 0; i < array.size(); i++) {
+						JSONObject jsonObect1 = (JSONObject) array.get(i);
+						
+						System.out.println("Datos del usuario: " + i);
+						System.out.println("Id: " + jsonObect1.get("id"));
+						System.out.println("Nombre: " + jsonObect1.get("firstName"));
+						System.out.println("Apellido: " + jsonObect1.get("lastName"));
+						System.out.println("Nombre de usuario: " + jsonObect1.get("username"));
+						System.out.println("Contraseña: " + jsonObect1.get("password"));
+						System.out.println();
+					}
+					
+					
+				}catch (FileNotFoundException ep) {}
+				catch (IOException ep) {}
+				catch (ParseException ep) {}
 
+				/*
 				if(usr.length()<=0){
 					usr_field.setBorder(BorderFactory.createLineBorder(Color.red,2));
 				}else {
@@ -908,6 +945,8 @@ public class Ventana extends JFrame implements KeyListener,MouseListener{
 					noAceptRadio.setBorderPainted(true);
 					noAceptRadio.setBorder(BorderFactory.createLineBorder(Color.green,2));
 				}
+				
+				*/
 				
 				
 			}
@@ -1100,188 +1139,188 @@ public class Ventana extends JFrame implements KeyListener,MouseListener{
  }
 
 
- //KEY LISTENER//////////////
-@Override
-public void keyTyped(KeyEvent e) {
-	// TODO Auto-generated method stub
-
-}
-
-
-@Override
-public void keyPressed(KeyEvent e) {
-	// TODO Auto-generated method stub
-	//dice el codigo de las teclas
-	System.out.println(e.getKeyCode());
-	System.out.println(e.getKeyChar());
-	//el 8 es el codigo de la tecla borrar
-	if(e.getKeyCode() == 8) {
-		btn_panel.removeAll();
-		getContentPane().repaint();
-		getContentPane().revalidate();
-		System.out.println("Se pre");
+	 //KEY LISTENER//////////////
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+	
 	}
 	
-	//el 87 es la tecla Q
-	//Aumenta el tamaño
-	if(e.getKeyCode() == 81){
-		Component[] elementos = btn_panel.getComponents();
-		for (int i = 0; i < elementos.length; i++){
-			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")){
-				JButton btn = ((JButton) elementos[i]);
-				btn.setSize(btn.getHeight()+10, btn.getWidth()+10);
-				getContentPane().repaint();
-				getContentPane().revalidate();
-			}
-		}
-	}
 	
-	//tecla W
-	//Se mueve para arriba
-	if(e.getKeyCode() == 87) {
-		Component[] elementos = btn_panel.getComponents();
-		for(int i = 0; i <elementos.length; i++) {
-			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
-				JButton btn = ((JButton) elementos[i]);
-				btn.setSize(btn.getWidth(), btn.getHeight());
-				btn.setLocation(btn.getX(), btn.getY() - 10);
-				getContentPane().repaint();
-				getContentPane().revalidate();
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		//dice el codigo de las teclas
+		System.out.println(e.getKeyCode());
+		System.out.println(e.getKeyChar());
+		//el 8 es el codigo de la tecla borrar
+		if(e.getKeyCode() == 8) {
+			btn_panel.removeAll();
+			getContentPane().repaint();
+			getContentPane().revalidate();
+			System.out.println("Se pre");
+		}
+		
+		//el 87 es la tecla Q
+		//Aumenta el tamaño
+		if(e.getKeyCode() == 81){
+			Component[] elementos = btn_panel.getComponents();
+			for (int i = 0; i < elementos.length; i++){
+				if(elementos[i].getClass().toString().equals("class javax.swing.JButton")){
+					JButton btn = ((JButton) elementos[i]);
+					btn.setSize(btn.getHeight()+10, btn.getWidth()+10);
+					getContentPane().repaint();
+					getContentPane().revalidate();
+				}
 			}
 		}
-	}
-
-	//tecla A
-	//se mueve hacia la izquierda
-		if(e.getKeyCode() == 65) {
+		
+		//tecla W
+		//Se mueve para arriba
+		if(e.getKeyCode() == 87) {
 			Component[] elementos = btn_panel.getComponents();
 			for(int i = 0; i <elementos.length; i++) {
 				if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
 					JButton btn = ((JButton) elementos[i]);
 					btn.setSize(btn.getWidth(), btn.getHeight());
-					btn.setLocation(btn.getX() - 10, btn.getY());
+					btn.setLocation(btn.getX(), btn.getY() - 10);
 					getContentPane().repaint();
 					getContentPane().revalidate();
 				}
 			}
 		}
 	
-	//tecla S
-	//se mueve hacia abajo
-	if(e.getKeyCode() == 83) {
-		Component[] elementos = btn_panel.getComponents();
-		for(int i = 0; i <elementos.length; i++) {
-			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
-				JButton btn = ((JButton) elementos[i]);
-				btn.setSize(btn.getWidth(), btn.getHeight());
-				btn.setLocation(btn.getX(), btn.getY() + 10);
-				getContentPane().repaint();
-				getContentPane().revalidate();
+		//tecla A
+		//se mueve hacia la izquierda
+			if(e.getKeyCode() == 65) {
+				Component[] elementos = btn_panel.getComponents();
+				for(int i = 0; i <elementos.length; i++) {
+					if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
+						JButton btn = ((JButton) elementos[i]);
+						btn.setSize(btn.getWidth(), btn.getHeight());
+						btn.setLocation(btn.getX() - 10, btn.getY());
+						getContentPane().repaint();
+						getContentPane().revalidate();
+					}
+				}
+			}
+		
+		//tecla S
+		//se mueve hacia abajo
+		if(e.getKeyCode() == 83) {
+			Component[] elementos = btn_panel.getComponents();
+			for(int i = 0; i <elementos.length; i++) {
+				if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
+					JButton btn = ((JButton) elementos[i]);
+					btn.setSize(btn.getWidth(), btn.getHeight());
+					btn.setLocation(btn.getX(), btn.getY() + 10);
+					getContentPane().repaint();
+					getContentPane().revalidate();
+				}
 			}
 		}
-	}
-
-	//tecla D
-	//se mueve hacia la derecha
-	if(e.getKeyCode() == 68) {
-		Component[] elementos = btn_panel.getComponents();
-		for(int i = 0; i <elementos.length; i++) {
-			if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
-				JButton btn = ((JButton) elementos[i]);
-
-				btn.setSize(btn.getWidth(), btn.getHeight());
-				btn.setLocation(btn.getX() + 10, btn.getY());
-				getContentPane().repaint();
-				getContentPane().revalidate();
+	
+		//tecla D
+		//se mueve hacia la derecha
+		if(e.getKeyCode() == 68) {
+			Component[] elementos = btn_panel.getComponents();
+			for(int i = 0; i <elementos.length; i++) {
+				if(elementos[i].getClass().toString().equals("class javax.swing.JButton")) {
+					JButton btn = ((JButton) elementos[i]);
+	
+					btn.setSize(btn.getWidth(), btn.getHeight());
+					btn.setLocation(btn.getX() + 10, btn.getY());
+					getContentPane().repaint();
+					getContentPane().revalidate();
+				}
 			}
 		}
+	
 	}
-
-}
+		
 	
-
-
-
-@Override
-public void keyReleased(KeyEvent e) {
-	// TODO Auto-generated method stub
-
 	
-}
-
-
-//MOUSE LISTENER//////////////////////////////////////////
-@Override
-public void mouseClicked(MouseEvent e) {
-	// TODO Auto-generated method stub
-}
-
-
-@Override
-public void mousePressed(MouseEvent e) {
-	// TODO Auto-generated method stub
-	System.out.println("se presiono uwu");
-	//se ombienen la cordenada del mouse al presionar
-	int x=e.getX();
-    int y=e.getY();
-	int w = (int)Math.floor(Math.random()*120+1);
-	int h = (int)Math.floor(Math.random()*120+1);
-
-	//color aleatorio para el boton
-	Random rand = new Random();
-	float r = rand.nextFloat();
-	float g = rand.nextFloat();
-	float b = rand.nextFloat();
-	Color randomColor = new Color(r, g, b);
 	
-	//se genera un boton random
-	JButton otroBotton = new JButton(r+","+g+","+b);
-	otroBotton.setBounds(x,y,w,h);
-	otroBotton.setOpaque(true);
-	otroBotton.setBorder(BorderFactory.createLineBorder(randomColor,5));
-	btn_panel.add(otroBotton);
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 	
-	//al presionar el boton aparece el texto que tiene dentro
-	otroBotton.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-			JOptionPane.showMessageDialog(null, otroBotton.getText());	
-		}
-	});
-	//repintar uwu
-
-	otroBotton.setFocusable(false);
-	getContentPane().repaint();
-}
-
-
-@Override
-public void mouseReleased(MouseEvent e) {
-	// TODO Auto-generated method stub
+		
+	}
 	
-}
-
-
-@Override
-public void mouseEntered(MouseEvent e) {
-	// TODO Auto-generated method stub
-	Random rand = new Random();
-	float r = rand.nextFloat();
-	float g = rand.nextFloat();
-	float b = rand.nextFloat();
 	
-	Color randomColor = new Color(r, g, b);
+	//MOUSE LISTENER//////////////////////////////////////////
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
 	
-	btn_panel.setBackground(randomColor);
-}
-
-
-@Override
-public void mouseExited(MouseEvent e) {
-	// TODO Auto-generated method stub
 	
-}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("se presiono uwu");
+		//se ombienen la cordenada del mouse al presionar
+		int x=e.getX();
+	    int y=e.getY();
+		int w = (int)Math.floor(Math.random()*120+1);
+		int h = (int)Math.floor(Math.random()*120+1);
+	
+		//color aleatorio para el boton
+		Random rand = new Random();
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+		Color randomColor = new Color(r, g, b);
+		
+		//se genera un boton random
+		JButton otroBotton = new JButton(r+","+g+","+b);
+		otroBotton.setBounds(x,y,w,h);
+		otroBotton.setOpaque(true);
+		otroBotton.setBorder(BorderFactory.createLineBorder(randomColor,5));
+		btn_panel.add(otroBotton);
+		
+		//al presionar el boton aparece el texto que tiene dentro
+		otroBotton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				JOptionPane.showMessageDialog(null, otroBotton.getText());	
+			}
+		});
+		//repintar uwu
+	
+		otroBotton.setFocusable(false);
+		getContentPane().repaint();
+	}
+	
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		Random rand = new Random();
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+		
+		Color randomColor = new Color(r, g, b);
+		
+		btn_panel.setBackground(randomColor);
+	}
+	
+	
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
